@@ -69,6 +69,7 @@ load(results_b_path);
 % load(results_a_path);
 
 quant = Bdata.quant;
+quant = 1;
 
 % Setup DCE model string
 dce_model_string = {};
