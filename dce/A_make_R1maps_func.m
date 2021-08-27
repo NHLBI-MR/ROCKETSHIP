@@ -608,6 +608,9 @@ elseif (steady_state_time == -2)
     end
     steady_state_time(2) = end_ss;
     steady_state_time(1) = 1; 
+    
+elseif length(steady_state_time) == 2
+    % Do nothing, use current steady_state_time input
 else
     %No zero index in matlab
     steady_state_time(2) = steady_state_time;
@@ -687,7 +690,9 @@ AB = A./B;
 % AB should not be less than 1. We interpolate the timeseries to clean
 % this. Threshold is 0.05, ie if 5% of timepoints <1 remove voxel;
 
-[AB T1LV lvind BADspacelABv GOODspacelABv] = cleanAB(AB, T1LV,lvind, 'AIF', min(numel(T1LV)), 0.05, quant);
+ABthresh = 1; % no filter for AB, original filter was 0.05
+
+[AB T1LV lvind BADspacelABv GOODspacelABv] = cleanAB(AB, T1LV,lvind, 'AIF', min(numel(T1LV)), ABthresh, quant);
 
 R1tLV = double((1/tr).*log(AB));
 Sss = Sss(GOODspacelABv);
